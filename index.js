@@ -11,6 +11,7 @@ require("dotenv").config();
 const whitelist = [
   "http://localhost:3000", 
   "http://localhost:3001", 
+  "https://match-app-psi.vercel.app",
 ]
 
 const corsOptions = {
