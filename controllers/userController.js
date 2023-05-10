@@ -115,6 +115,39 @@ module.exports.register = async (req, res, next) => {
     }
   };
 
+
+module.exports.updateUser = async (req, res, next) => {
+  try {
+
+    const { name, email, age, about, username, password, dob, gender, relationship_status, body_type, hair_color, eye_color, city, avatarImage  } = req.body;
+
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) return res.json({ msg: "User not found", status: false });
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (age) user.age = age;
+    if (about) user.about = about;
+    if (username) user.username = username;
+    if (password) user.password = password;
+    if (dob) user.dob = dob;
+    if (gender) user.gender = gender;
+    if (relationship_status) user.relationship_status = relationship_status;
+    if (body_type) user.body_type = body_type;
+    if (hair_color) user.hair_color = hair_color;
+    if (eye_color) user.eye_color = eye_color;
+    if (city) user.city = city;
+    if (avatarImage) user.avatarImage = avatarImage;
+
+    await user.save();
+
+    return res.json({ status: true, user });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+
 module.exports.updateCredit = async (req, res, next) => {
   try {
     const { credits, user_id } = req.body;

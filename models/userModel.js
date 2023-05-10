@@ -33,6 +33,41 @@ const userSchema = new mongoose.Schema({
     required: true,
     max: 50,
   },
+  dob: {
+    type: String,
+    required: true,
+    max: 50,
+  },
+  gender: {
+    type: String,
+    required: true,
+    max: 50,
+  },
+  relationship_status: {
+    type: String,
+    required: true,
+    max: 50,
+  },
+  body_type: {
+    type: String,
+    required: true,
+    max: 50,
+  },
+  hair_color: {
+    type: String,
+    required: true,
+    max: 50,
+  },
+  eye_color: {
+    type: String,
+    required: true,
+    max: 50,
+  },
+  city: {
+    type: String,
+    required: true,
+    max: 50,
+  },
   password: {
     type: String,
     required: true,

@@ -14,6 +14,7 @@ const {
   moderatorLogin,
   updateCredit,
   minusCredits,
+  updateUser,
 } = require("../controllers/userController");
 
 const router = require("express").Router();
@@ -21,6 +22,7 @@ const router = require("express").Router();
 router.post("/login", login);
 router.post("/login/moderator", moderatorLogin);
 router.post("/register", register);
+router.post("/updateUser", updateUser);
 router.post("/createModerator", moderatorRegister);
 router.post("/createFavorite", favoriteRegister);
 router.get("/allusers/:id", getAllUsers);
