@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -46,6 +47,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  region: {
+    type: String,
+    default: "",
+  },
+  appearance: {
+    type: String,
+    default: "",
+  },
+  height: {
+    type: String,
+    default: "",
+  },
+  gender: {
+    type: String,
+    default: "",
+  },
+
 });
 
 module.exports = mongoose.model("moderators", userSchema);

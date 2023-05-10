@@ -119,9 +119,9 @@ module.exports.register = async (req, res, next) => {
 module.exports.updateUser = async (req, res, next) => {
   try {
 
-    const { name, email, age, about, username, password, dob, gender, relationship_status, body_type, hair_color, eye_color, city, avatarImage  } = req.body;
+    const { name, email, age, about, username, password, dob, gender, relationship_status, body_type, hair_color, eye_color, city, avatarImage, height  } = req.body;
 
-    const user = await User.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: req.body.user_id });
     if (!user) return res.json({ msg: "User not found", status: false });
 
     if (name) user.name = name;
@@ -138,6 +138,7 @@ module.exports.updateUser = async (req, res, next) => {
     if (eye_color) user.eye_color = eye_color;
     if (city) user.city = city;
     if (avatarImage) user.avatarImage = avatarImage;
+    if (height) user.height = height;
 
     await user.save();
 
@@ -281,6 +282,11 @@ module.exports.moderatorRegister = async (req, res, next) => {
         avatarImage: req.body.avatarImage,
         height: req.body.height,
         username: req.body.username,
+        region: req.body.region,
+        appearance: req.body.appearance,
+        relationship: req.body.relationship,
+        body_type: req.body.body_type,
+        gender: req.body.gender,
         password: hashPassword,
       });
 
@@ -313,6 +319,9 @@ module.exports.getAllModerators = async (req, res, next) => {
       "height",
       "relationship",
       "body_type",
+      "region",
+      "appearance",
+      "gender",
       "_id",
     ]);
     return res.json(moderators);

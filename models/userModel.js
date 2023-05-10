@@ -40,12 +40,14 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: true,
     max: 50,
   },
   relationship_status: {
     type: String,
-    required: true,
+    max: 50,
+  },
+  height: {
+    type: String,
     max: 50,
   },
   body_type: {
