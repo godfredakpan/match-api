@@ -35,7 +35,6 @@ const userSchema = new mongoose.Schema({
   },
   dob: {
     type: String,
-    required: true,
     max: 50,
   },
   gender: {
@@ -52,22 +51,18 @@ const userSchema = new mongoose.Schema({
   },
   body_type: {
     type: String,
-    required: true,
     max: 50,
   },
   hair_color: {
     type: String,
-    required: true,
     max: 50,
   },
   eye_color: {
     type: String,
-    required: true,
     max: 50,
   },
   city: {
     type: String,
-    required: true,
     max: 50,
   },
   password: {

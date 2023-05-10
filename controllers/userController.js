@@ -105,7 +105,7 @@ module.exports.register = async (req, res, next) => {
           res.status(200).send(data);
         })
         .catch(err => {
-          res.status(500).send({
+          res.status(200).send({
             message:
               err.message || "Some error occurred while creating the User."
           });
