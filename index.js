@@ -12,6 +12,10 @@ const whitelist = [
   "http://localhost:3000", 
   "http://localhost:3001", 
   "https://match-app-psi.vercel.app",
+  "https://www.flirtdatingmatch.com",
+  "https://flirtdatingmatch.com",
+  "http://www.flirtdatingmatch.com",
+  "www.flirtdatingmatch.com",
 ]
 
 const corsOptions = {
