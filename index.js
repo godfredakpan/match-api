@@ -16,6 +16,7 @@ const whitelist = [
   "https://flirtdatingmatch.com",
   "http://www.flirtdatingmatch.com",
   "www.flirtdatingmatch.com",
+  "https://match-backend.vercel.app"
 ]
 
 const corsOptions = {
