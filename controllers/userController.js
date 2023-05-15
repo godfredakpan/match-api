@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const salt = Math.floor(Math.random() * 10);
 const Moderators = require("../models/moderatorModel");
+const ModeratorUsers = require("../models/moderatorUserModel");
 const Favorites = require("../models/favoriteModel");
 
 module.exports.login = async (req, res, next) => {
@@ -239,7 +240,7 @@ exports.deleteAll = (req, res) => {
 module.exports.moderatorLogin = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const moderator = await Moderators.findOne({ username });
+    const moderator = await ModeratorUsers.findOne({ username });
     if (!moderator)
       return res.json({ msg: "Incorrect Username or Password", status: false });
     const isPasswordValid = await bcrypt.compare(password, moderator.password);
@@ -251,6 +252,81 @@ module.exports.moderatorLogin = async (req, res, next) => {
     next(ex);
   }
 };
+
+module.exports.moderatorCreateUser = async (req, res, next) => {
+  try {
+    const { username, email, password: plainTextPassword  } = req.body;
+
+    if (!username || !email || !plainTextPassword )
+      return res.json({ msg: "All fields are required", status: false });
+
+      const userExists = [];
+    
+      for (const resp of userExists) {
+        resp && userData.push(resp);
+      }
+
+      const hashPassword = await bcrypt.hash(plainTextPassword, salt);
+    
+      // Create a Moderator
+      const user = new ModeratorUsers({
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+        about: req.body.about,
+        age: req.body.age,
+        avatarImage: req.body.avatarImage,
+        height: req.body.height,
+        username: req.body.username,
+        region: req.body.region,
+        appearance: req.body.appearance,
+        relationship: req.body.relationship,
+        body_type: req.body.body_type,
+        gender: req.body.gender,
+        password: hashPassword,
+      });
+
+    
+      user
+        .save(user)
+        .then(data => {
+          res.status(200).send(data);
+        })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating the User."
+          });
+        });
+    } catch (ex) {
+      next(ex);
+    }
+  };
+
+  module.exports.getAllModeratorUsers = async (req, res, next) => {
+    try {
+      const moderators = await ModeratorUsers.find().select([
+        "name",
+        "email",
+        "username",
+        "avatarImage",
+        "age",
+        "about",
+        "height",
+        "relationship",
+        "body_type",
+        "region",
+        "appearance",
+        "gender",
+        "_id",
+      ]);
+      // sort by date
+      moderators.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
+      return res.json(moderators);
+    } catch (ex) {
+      next(ex);
+    }
+  };
 
 module.exports.moderatorRegister = async (req, res, next) => {
   try {
@@ -322,8 +398,11 @@ module.exports.getAllModerators = async (req, res, next) => {
       "region",
       "appearance",
       "gender",
+      "createdAt",
       "_id",
     ]);
+    // sort by date
+    moderators.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
     return res.json(moderators);
   } catch (ex) {
     next(ex);
