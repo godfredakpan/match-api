@@ -205,12 +205,14 @@ module.exports.getAllUsers = async (req, res, next) => {
 module.exports.getAllGeneralUsers = async (req, res, next) => {
   try {
     const users = await User.find().select([
+      "name",
       "email",
       "username",
       "avatarImage",
       "age",
       "about",
       "height",
+      "gender",
       "relationship",
       "body_type",
       "_id",
@@ -220,6 +222,38 @@ module.exports.getAllGeneralUsers = async (req, res, next) => {
     next(ex);
   }
 };
+
+
+module.exports.updateModeratorImage = async (req, res, next) => {
+  try {
+
+    const body = {
+      avatarImage: req.body.image
+    }
+
+    const id = req.body.user_id;
+
+    Moderators.findByIdAndUpdate(id, body, { useFindAndModify: false })
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update Event with id=${id}. Maybe Event was not found!`
+        });
+      } else res.json({ status: true, msg: "Image updated successfully" });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Event with id=" + id
+      });
+    });
+
+    // return res.json({ status: true, msg: "Image updated successfully" });
+
+  } catch (ex) {
+    next(ex);
+  }
+};
+
 
 exports.deleteAll = (req, res) => {
   Moderators.deleteMany({})
