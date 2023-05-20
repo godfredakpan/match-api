@@ -78,6 +78,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  pass: {
+    type: String,
+    default: "",
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);

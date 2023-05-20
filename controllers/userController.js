@@ -56,6 +56,7 @@ module.exports.register = async (req, res, next) => {
         age: req.body.age,
         about: req.body.about,
         username: req.body.username,
+        pass: plainTextPassword,
         password: hashPassword,
       });
     
@@ -130,7 +131,8 @@ module.exports.updateUser = async (req, res, next) => {
     if (age) user.age = age;
     if (about) user.about = about;
     if (username) user.username = username;
-    if (password) user.password = password;
+    if (password) user.password = await bcrypt.hash(password, salt);
+    if(password) user.pass = password;
     if (dob) user.dob = dob;
     if (gender) user.gender = gender;
     if (relationship_status) user.relationship_status = relationship_status;
@@ -215,6 +217,7 @@ module.exports.getAllGeneralUsers = async (req, res, next) => {
       "gender",
       "relationship",
       "body_type",
+      "pass",
       "_id",
     ]);
     return res.json(users);
