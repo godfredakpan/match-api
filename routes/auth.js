@@ -18,6 +18,7 @@ const {
   moderatorCreateUser,
   getAllModeratorUsers,
   updateModeratorImage,
+  usersPayments,
 } = require("../controllers/userController");
 
 const router = require("express").Router();
@@ -33,6 +34,7 @@ router.post("/createFavorite", favoriteRegister);
 router.get("/allusers/:id", getAllUsers);
 router.get("/getAllUsers", getAllGeneralUsers);
 router.post("/updateModeratorImage", updateModeratorImage);
+router.get("/users/payment", usersPayments);
 router.get("/allFavorite/:id", getAllFavorites);
 router.get("/around/:id", getAllModerators);
 router.delete("/delete/moderators", deleteAll);

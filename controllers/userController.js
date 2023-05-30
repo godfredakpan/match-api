@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Payment = require("../models/paymentModel");
 const bcrypt = require("bcrypt");
 const salt = Math.floor(Math.random() * 10);
 const Moderators = require("../models/moderatorModel");
@@ -154,7 +155,7 @@ module.exports.updateUser = async (req, res, next) => {
 
 module.exports.updateCredit = async (req, res, next) => {
   try {
-    const { credits, user_id } = req.body;
+    const { credits, user_id, amount, transaction_id, description } = req.body;
 
     const user = await User.findOne({ _id: user_id });
     if (!user) return res.json({ msg: "User not found", status: false });
@@ -163,12 +164,42 @@ module.exports.updateCredit = async (req, res, next) => {
 
     await user.save();
 
+    const payment = new Payment({
+      user: user.name,
+      email: user.email,
+      amount: amount,
+      transaction_id: transaction_id,
+      description: description,
+      credits: user.credits,
+    });
+
+    await payment.save();
+
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);
   }
 };
 
+
+module.exports.usersPayments = async (req, res, next) => {
+  try {
+    const payments = await Payment.find().select([
+      "user",
+      "email",
+      "amount",
+      "transaction_id",
+      "description",
+      "credits",
+      "status",
+      "date",
+      "_id",
+    ]);
+    return res.json(payments);
+  } catch (ex) {
+    next(ex);
+  }
+};
 
 module.exports.minusCredits = async (req, res, next) => {
   try {
