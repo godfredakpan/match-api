@@ -39,10 +39,7 @@ const paymentSchema = new mongoose.Schema({
         type: String,
         default: "pending",
     },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
+    timestamps: true,
 });
 
 module.exports = mongoose.model("payment", paymentSchema);
